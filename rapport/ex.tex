@@ -1,0 +1,543 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{natbib}         % Pour la bibliographie
+\usepackage{url}            % Pour citer les adresses web
+\usepackage[T1]{fontenc}    % Encodage des accents
+\usepackage[utf8]{inputenc} % Lui aussi
+\usepackage[frenchb]{babel} % Pour la traduction française
+\usepackage{numprint}       % Histoire que les chiffres soient bien
+
+\usepackage{amsmath}        % La base pour les maths
+\usepackage{mathrsfs}       % Quelques symboles supplémentaires
+\usepackage{amssymb}        % encore des symboles.
+\usepackage{amsfonts}       % Des fontes, eg pour \mathbb.
+
+\usepackage[svgnames]{xcolor} % De la couleur
+\usepackage{geometry}       % Gérer correctement la taille
+
+%%% Si jamais vous voulez changer de police: décommentez les trois 
+%\usepackage{tgpagella}
+%\usepackage{tgadventor}
+%\usepackage{inconsolata}
+
+%%% Pour L'utilisation de Python
+\usepackage{pythontex}
+
+\usepackage{graphicx} % inclusion des graphiques
+\usepackage{wrapfig}  % Dessins dans le texte.
+
+\usepackage{tikz}     % Un package pour les dessins (utilisé pour l'environnement {code})
+\usepackage[framemethod=TikZ]{mdframed}
+% Un environnement pour bien présenter le code informatique
+\newenvironment{code}{%
+\begin{mdframed}[linecolor=Green,innerrightmargin=30pt,innerleftmargin=30pt,
+backgroundcolor=Black!5,
+skipabove=10pt,skipbelow=10pt,roundcorner=5pt,
+splitbottomskip=6pt,splittopskip=12pt]
+}{%
+\end{mdframed}
+}
+
+% Mettez votre titre et votre nom ci-après
+\title{Rapport de TIPE \\
+Avance du Périhélie de Mercure}
+\author{JJ Fleck, PCSI\oldstylenums{1}, \oldstylenums{2015}-\oldstylenums{2016}}
+%% À décommenter si vous ne voulez pas que la date apparaisse explicitement
+%\date{}
+
+% Un raccourci pour composer les unités correctement (en droit)
+% Exemple: $v = 10\U{m.s^{-1}}$
+\newcommand{\U}[1]{~\mathrm{#1}}
+
+% Pour discuter avec le prof dans le document: le premier argument est 
+% le nom de celui qui fait la remarque et le second la remarque 
+% proprement dite: \question{jj}{Que voulez-vous dire par là ?}
+% \reponse{Droopy}{I'm very happy...}
+\usepackage{todonotes}
+\newcommand{\question}[2]{\todo[inline,author=#1]{#2}}
+\newcommand{\reponse}[2]{\todo[inline,color=green,author=#1]{#2}}
+
+% Les guillemets \ofg{par exemple}
+\newcommand{\ofg}[1]{\og{}#1\fg{}}
+% Le d des dérivées doit être droit: \frac{\dd x}{\dd t}
+\newcommand{\dd}{\text{d}}
+
+
+% NB: le script TeXcount permet de compter les mots utilisés dans chaque section d'un document LaTeX. Vous en trouverez une version en ligne à l'adresse
+% http://app.uio.no/ifi/texcount/online.php
+% Il suffit d'y copier l'ensemble du présent document (via Ctrl-A/Ctrl-C puis Ctrl-V dans la fenêtre idoine) pour obtenir le récapitulatif tout en bas de la page qui s'ouvre alors.
+
+% Pour récupérer les bonnes entrées bibliographiques, je vous conseille l'usage de scholar.google.fr pour les recherches
+% et la récupération des entrée BibTeX comme décrit dans cette vidéo: https://www.youtube.com/watch?v=X-9T2Oaj-5A
+
+% Quelques macros utiles
+% La dérivée temporelle, tellement courante en physique, avec les d droits
+\newcommand{\ddt}[1]{\frac{\dd #1}{\dd t}}
+% Des parenthèses, crochets et accolades qui s'adaptent automatiquement à la taille de ce qu'il y a dedans
+\newcommand{\pa}[1]{\left(#1\right)}
+\newcommand{\pac}[1]{\left[#1\right]}
+\newcommand{\paa}[1]{\left\{#1\right\}}
+% Un raccourci pour écrire une constante
+\newcommand{\cte}{\text{C}^{\text{te}}}
+% Pour faire des indices en mode texte (comme les énergie potentielles)
+\newcommand{\e}[1]{_{\text{#1}}}
+% Le produit vectoriel a un nom bizarre:
+\newcommand{\vectoriel}{\wedge}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+%   Find something meaningful to say in english in order to describe the present report...
+    
+    Relativity is one of the most beautiful theories we can come across in physics. It has some magic in it as it is mainly based on mere \ofg{thought experiments}. Nevertheless, in Phycics, it is experimental evidence that decides whether a theory is worth developping and the advance of Mercury's perihelion was one of the most exciting moments of truth Einstein faced with its \ofg{General Relativity} theory.
+    
+    In this work, we tried to understand how some glimpses of relativity could shed light on one of the late \textsc{xix}$^{\text{th}}$ century mysteries.
+\end{abstract}
+
+\section{Introduction à la dynamique relativiste : relation
+fondamentale et conservation de l'énergie}
+
+On peut s'interroger sur la forme que prendra la généralisation
+relativiste de la relation fondamentale de la dynamique newtonienne :
+
+\begin{equation}
+    \ddt{\vec{p}} = \sum \vec{F} 
+    \qquad \text{avec} \qquad 
+    \vec{p} = m\vec{v}
+\end{equation}
+
+    On retrouve en fait la même formulation, mais avec cette fois
+
+\begin{equation}
+    \vec{p} = \gamma \, m \vec{v} 
+    \qquad\text{où}\qquad
+    \gamma=\frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}
+\end{equation}
+
+\noindent dont découle une nouvelle forme de la dérivée du vecteur
+quantité de mouvement :
+
+
+
+\begin{equation}
+    \ddt{\vec{p}} = 
+    \gamma\, m \ddt{\vec{v}} + \ddt{\gamma}\, m \vec{v}
+\end{equation}
+
+On remarque qu'ainsi, le vecteur accélération du point matériel
+auquel on applique la relation n'est plus nécessairement colinéaire
+à la résultante des forces appliquées à ce point.
+
+    On peut aussi démontrer un nouveau théorème de l'énergie : 
+
+\begin{equation}
+    \ddt{}\!\pa{E_0 + E\e{c} + E\e{p}} = \mathcal{P}'
+\end{equation}
+
+\noindent où $\mathcal{P}'$ représente la puissance des forces non
+conservatives, $E\e{p}$ l'ensemble des énergies potentielles des forces
+conservatives, $E\e{c} = (\gamma - 1)\, m\, c^2$ une nouvelle définition de
+l'énergie cinétique et $E_0=m\, c^2$ l'énergie propre de l'objet
+directement proportionnelle à sa masse.
+    
+    Pour ce qui est de la nouvelle définition de l'énergie
+cinétique, on peut remarquer qu'en développant $\gamma - 1$ au premier
+ordre en $\frac{v^2}{c^2}$, on retrouve la formule bien connue : $E\e{c} =
+\frac{m\, v^2}{2}$.
+
+    Dans le cas (courant en astronomie) où la puissance des forces
+non conservatives est négligeable, on obtient la relation :
+    
+\begin{equation}
+    E_0 + E\e{c} + E\e{p} = E = \cte
+\end{equation}
+
+    \section{Application à une planète $A$ soumise à la force
+gravitationnelle d'une étoile placée en $O$}
+
+La relation fondamentale, pour une planète de masse $m$, s'écrit 
+
+\begin{equation}
+    \ddt{\vec{p}} = -\frac{G M m}{r^3}\, \vec{r}
+\end{equation}
+
+\noindent
+avec $\vec{r} = \overrightarrow{OA}$ et $M$ masse de l'étoile exerçant la
+force.
+
+    On peut montrer dans une telle situation (voir équation~\ref{moment:cinetique} dans les annexes, page~\pageref{moment:cinetique})
+que le moment cinétique de la planète est constant et que le mouvement
+est donc plan. On obtient, avec $\vec{L} = \vec{r}\vectoriel\vec{p}$
+où $\vectoriel$ est le produit vectoriel,
+
+\begin{equation}
+    L = \gamma\, m \, r^2 \, \ddt{\theta} = \cte
+\end{equation}
+
+    En utilisant la conservation de l'énergie qui permet d'atteindre
+$\gamma$ et son expression littérale que l'on va exprimer en fonction de
+la nouvelle variable $u = 1/r$ et de ses dérivées en fonction de
+$\theta$ (cf équation~\ref{binet}, page~\pageref{binet}), on arrive à l'équation 
+
+\begin{equation}
+    \boxed{
+    \frac{\dd^2 u}{\dd \theta^2} + u = \frac{G\, M\, m\, E}{L^2\, c^2}
+        + \frac{\pa{G\,M\, m}^2}{L^2\, c^2}\, u
+    }
+\end{equation}
+
+
+\begin{flalign}
+\text{Qui se réduit à} & &
+    \frac{\dd u}{\dd \theta} + B^2\, u &= A 
+    \quad \text{avec} \quad 
+    B^2  = 1 - \pa{\frac{G M m}{L\, c}}^{\!\!2} &
+\end{flalign}
+
+\begin{flalign}
+\text{On obtient donc} & &
+    r &= \frac{p}{1+e\cos{\pac{B\pa{\theta - \theta_0}}}} &
+\end{flalign}
+
+\begin{flalign}
+\text{où}   & &
+    p&=\frac{L^2\, c^2 - (G M m)^2}{G M m\, E}  
+    \qquad\text{et}\qquad
+    e=C\, \frac{B^2}{A} 
+    &   %\\[4mm]
+%\text{et}  & &
+%   e&=C\, \frac{B^2}{A} &
+\end{flalign}
+
+\noindent avec $C$ constante d'intégration.
+Si \mbox{$e<1$}, comme c'est le cas pour Mercure, on observe sensiblement
+une ellipse avec la particularité de ne pas se refermer sur elle-même.
+Entre deux passages au point le plus proche du soleil de son orbite
+\mbox{($\cos\pac{B(\theta-\theta_0)}=1$)}, son vecteur position aura
+tourné d'un angle \mbox{$2\pi + \delta$} avec l'expression suivante de
+$\delta$ 
+
+\begin{equation}
+    \boxed{
+    \delta = 2\pi\pa{\frac{1}{B} - 1}
+    \approx \pi \pa{\frac{G\, M\, m}{L\, c}}^{\!\!2} 
+    = \pi \, \frac{G M}{p\, c^2}
+    = \pi\, \frac{G M}{a\, c^2\, \pa{1-e^2}}
+    }
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Fig01}      
+\end{center}
+\caption{Illustration du phénomène de précession du périhélie}
+\end{figure}
+
+
+Malheureusement, les valeurs numériques pour Mercure ne donnent qu'une
+précession de $7''$ d'angle par siècle et non pas les $43''$ d'angle par
+siècle escomptées : il~manque le facteur~6 que l'on trouvera dans la
+formule donnée par la relativité générale. Il est néanmoins
+intéressant de constater que la relativité, même restreinte, donne
+déjà une orbite qui précesse là où Newton ne voit qu'une ellipse
+stable.
+
+\subsection{Le point de vue de la relativité générale}
+
+Le développement de la relativité générale provient de la remarque
+d'Einstein portant sur l'identité (à priori non triviale) entre masse
+grave et masse inerte. La masse grave est celle que l'on prend en compte
+lorsque l'on décrit l'interaction gravitationnelle entre 2 corps. La
+masse inerte, en revanche, est celle que l'on utilise pour écrire la
+relation fondamentale de la dynamique :
+    
+\begin{equation}
+    m\, \vec{a} = \sum \vec{F}
+\end{equation}
+
+    Plusieurs expériences ont tendu à prouver au fil des siècles
+l'identité de ces deux notions (ou au moins un facteur de
+proportionnalité entre elles). Partant de cette constatation, Einstein a
+posé l'équivalence entre le champ gravitationnel et l'accélération
+: aucune expérience ne peut révéler de différence entre un
+laboratoire local accéléré et son analogue sur la terre soumis à
+la gravitation.
+
+Il en découle que l'interprétation de la gravitation en terme
+d'interaction résulterait de la place privilégiée accordée aux
+référentiels galiléens alors que rien ne la justifie à priori dans
+la théories newtonienne ou celle de la relativité restreinte. Einstein
+en est donc arrivé à développer un espace-temps qui contiendrait
+déjà en lui l'interaction gravitationnelle, tout comme il apparaît des
+accélérations d'entraînement et de Coriolis dans un référentiel
+non galiléen en mécanique classique.
+
+\begin{figure}[ht]
+
+ \begin{center}
+\includegraphics[width = 12cm]{Fig02}
+\caption{Comparaison des deux visions}
+      
+\end{center}
+\end{figure}
+
+\subsection{Particule au voisinage d'une masse à symétrie sphérique}
+
+On peut toujours appliquer la relation fondamentale de la dynamique
+généralisée, mais la différence introduite par la relativité
+générale prend forme dans l'expression de la vitesse qui ne s'écrit
+plus en coordonnée polaire :
+
+\begin{equation}
+    \vec{v} = \ddt{\vec{r}} = \ddt{r}\, \vec{e_r}
+            + r\,\ddt{\theta}\, \vec{e_{\theta}}
+\end{equation}
+
+\noindent mais, avec la nouvelle métrique où $r_0 = \frac{G M}{c^2}$,
+
+\begin{equation}
+    \vec{v} = \frac{1}{1-2\, \frac{r_0}{r}}\, \ddt{r}\, \vec{e_r}
+    + \frac{r}{\sqrt{1-2\, \frac{r_0}{r}}} \, \ddt{\theta}\, \vec{e_{\theta}}
+\end{equation}
+
+\noindent   De même, l'énergie s'exprime à présent 
+ 
+\begin{equation}
+    E = \gamma\, m\, c^2\, \sqrt{1-2\, \frac{r_0}{r}} = \cte 
+\end{equation}
+
+
+\noindent pour le cas céleste. On montre comme précédemment que le moment cinétique $\vec{L}$ de la planète est constant et vaut :
+
+\begin{equation}
+    \vec{L} = \frac{\gamma\, m\, r^2}{\sqrt{1 - 2\,\frac{r_0}{r}}}\,
+            \ddt{\theta}\, \vec{e_z}
+\end{equation}
+
+Après substitution de $v^2$ en fonction de $\gamma$ et introduction de
+la variable $u = 1/r$ (cf annexe 1), on obtient l'équation
+différentielle suivante :
+            
+\begin{equation}
+    \boxed{
+    \frac{\dd^2 u}{\dd \theta^2} + u 
+    = \frac{G M m^2}{L^2} + \frac{3\, G M}{c^2}\, u^2
+    }
+\end{equation}
+
+Vis à vis de l'équation Newtonienne, il apparaît un terme
+quadratique d'amplitude très faible qui induira la précession
+observée de Mercure de $43''$ d'angle par siècle. La résolution de
+cette équation avec Maple (cf annexe 2) donne la formule suivante pour
+l'avance sur une période :
+
+\begin{equation}
+    \boxed{
+    \delta = 6\, \pi \, \frac{G M}{a\, c^2\pa{1-e^2}}
+    }
+\end{equation}
+
+    Et l'application numérique correspondante pour un siècle donne
+bien les $43''$ manquantes.
+
+\section{Conclusion}
+
+    Au milieu du siècle, d'autres théories se sont développées 
+avec l'ambition de surpasser la relativité dans son application à
+l'avancée du périhélie de Mercure. Plus exactement, par
+l'intervention de nouvelles notions dans le cadre de la mécanique
+classique, elles essayèrent de rajouter quelques secondes d'angle à la
+contribution newtonienne, ce qui aurait pour effet de rendre la correction
+relativiste trop importante et invaliderait donc la théorie.
+
+La prise en compte de la non sphéricité parfaite du soleil par les
+détracteurs de la relativité déboucha notamment sur la constatation
+que, passée une certaine valeur de cette non-sphéricité, on
+observerait effectivement une précession d'origine non-relativiste.
+Malheureusement pour cette théorie, les dernières mesures effectuées
+dans ce domaine penchent pour une correction minime due à cet effet et
+la prédiction relativiste s'accorde encore aujourd'hui merveilleusement
+bien aux incertitudes d'observation.
+
+%\newpage
+
+
+\begin{appendix}
+
+\section{Calculs}
+
+
+\subsection{Le point de vue de la relativité restreinte}
+
+Posons les notations suivantes:
+
+\begin{flalign}
+\text{Vecteur position de la particule}
+&&  \vec{r} &= \overrightarrow{OA} = r\, \vec{e_r}  &\\[4mm]
+\text{Vecteur vitesse de la particule}
+&&  \vec{v} &= \ddt{\vec{r}} = \ddt{r}\,\vec{e_r}
+                + r\, \ddt{\theta}\, \vec{e_\theta} &   \\[4mm]
+\text{Quantité de mouvement de la particule}
+&&  \vec{p} &= \gamma\, m\, \vec{v} &   \\[4mm]
+\text{Moment cinétique de la particule $A$ en $O$}
+&&  \vec{L} &= \vec{r}\vectoriel\vec{p} &
+\end{flalign}
+
+
+\noindent Remarquons que, comme $\ddt{\vec{r}}\vectoriel\vec{p} =
+\vec{v}\vectoriel\gamma\, m\, \vec{v} = \vec{0}$, on a
+
+\begin{equation}
+    \ddt{\vec{L}} = \ddt{\vec{r}}\vectoriel\vec{p} +
+    \vec{r}\vectoriel\ddt{\vec{p}}
+    = \vec{r}\vectoriel\ddt{\vec{p}}
+\end{equation}
+
+\noindent  Appliquons la relation fondamentale de la dynamique à la planète 
+
+\begin{equation}
+    \ddt{\vec{p}} = -\frac{G M m}{r^3}\, \vec{r}
+\end{equation}
+
+
+\begin{flalign}
+\text{d'où} &&
+    \ddt{\vec{L}} &= \vec{r}\vectoriel\ddt{\vec{p}} = \vec{0}   & \label{moment:cinetique}
+\end{flalign}
+
+\noindent On a \emph{conservation du moment cinétique}, le mouvement est
+donc plan. Par conséquent
+
+\begin{equation}
+    \vec{L} = L\, \vec{e_z} \qquad \text{avec} \qquad 
+    L = \gamma\, m\,r^2\, \ddt{\theta} = \cte
+\end{equation}
+
+\noindent On a aussi \emph{conservation de l'énergie}, avec 
+$E\e{c} = (\gamma- 1)\, m\, c^2$ et $E_0 = m\, c^2$,
+
+\begin{equation}
+    E_0 + E\e{c} + E\e{p} = \gamma\, m\, c^2 - \frac{G M m}{r} = E = \cte
+\end{equation}
+
+\noindent On introduit la variable $u=1/r$ et on en déduit une expression
+de $\gamma$
+
+\begin{equation}
+    \gamma = \frac{E + G M m\, u}{m\, c^2}
+\end{equation}
+      
+\noindent  On va extraire de la vitesse une autre expression de $\gamma$
+
+\begin{flalign}
+\text{Comme}    &&  
+    \gamma &= \frac{1}{\sqrt{1-\frac{v^2}{c^2}}} &
+\end{flalign}
+
+\begin{flalign}
+\text{On en déduit} &&  
+    \frac{1}{\gamma^2} &= 1 - \frac{v^2}{c^2}   &
+\end{flalign}
+    
+\begin{flalign}
+\text{Or}   &&
+    v^2 &= \pa{\ddt{r}}^2 + \pa{r\, \ddt{\theta}}^2 &
+\end{flalign}
+
+\noindent Exprimons $\ddt{r}$ et $r\, \ddt{\theta}$ en fonction de la
+nouvelle variable $u=\frac{1}{r}$
+
+\begin{align}
+    \ddt{r} &= \frac{\dd r}{\dd \theta}\, \ddt{\theta} 
+        = \frac{L}{\gamma\, m\,
+        r^2}\, \frac{\dd r}{\dd \theta}
+    = -\frac{L}{\gamma\, m}\, \frac{\dd u}{\dd \theta} \\[4mm]
+    r\, \ddt{\theta} &= r\, \frac{L}{\gamma\, m\, r} 
+    = \frac{L}{\gamma \, m}\, u \label{binet}
+\end{align}
+
+
+\noindent D'où l'expresion de $\gamma^2$, au premier ordre en
+$\frac{v^2}{c^2}$,
+
+\begin{equation}
+    \gamma^2 = 1 + \frac{v^2}{c^2} 
+    = 1 + \pa{\frac{L}{m\, c}}^{\!\!2} \, \pac{u^2 +
+    \pa{\frac{\dd u}{\dd \theta}}^{\!\!2}}
+\end{equation}
+
+
+\begin{flalign}
+\text{Or}   &&  
+    \gamma^2 &= \pa{\frac{E + G\, M\, m\, u}{m\, c^2}}^{\!\!2}  &
+\end{flalign}
+
+\begin{flalign}
+\text{On en déduit l'équation}  &&
+    u^2 + \pa{\frac{\dd u}{\dd \theta}}^2 
+    &= \pa{\frac{m\, c}{L}}^{\!\!2} \pac{\pa{\frac{E + G
+    M m\, u}{m\, c^2}}^{\!\!2} - 1} &
+\end{flalign}
+
+\noindent En dérivant cette équation par rapport à $\theta$, en
+simplifiant par $2\, \frac{\dd u}{\dd \theta}$, on obtient
+    
+\begin{equation}
+    \frac{\dd^2 u}{\dd \theta^2} + u 
+    = \pa{\frac{m\, c}{L}}^{\!\!2} 
+    \pa{\frac{E + G M m\, u}{m\, c^2}}^{\!\!2} \frac{G M m}{mc^2}
+\end{equation}
+
+\noindent En redéveloppant les différents termes, on obtient
+
+\begin{equation}
+    \boxed{
+    \frac{\dd^2u}{\dd\theta^2} + u 
+    = \frac{G M m\, E}{L^2\, c^2} 
+    + \frac{\pa{G M m}^2}{L^2\, c^2}\, u
+    }
+\end{equation}
+    
+\begin{flalign}
+\text{Qui se réduit à}  &&
+    \frac{\dd^2u}{\dd\theta^2} + B^2\, u &= A
+    \quad\text{avec}\quad 
+    B^2= 1 - \pa{\frac{G M m}{L\, c}}^{\!\!2} &
+\end{flalign}
+
+\begin{flalign}
+\text{On obtient donc}&&
+    r &= \frac{p}{1+e\cos{\pac{B\pa{\theta - \theta_0}}}} &
+\end{flalign}
+ 
+\begin{flalign}
+\text{où}   &&
+    p&=\frac{L^2\, c^2 - (G M m)^2}{G M m E}    &
+\end{flalign}
+
+... Vous avez compris, je m'arrête là
+
+\section{Code Python}
+
+Cette section est juste là pour montrer comment on peut rajouter du code Python depuis l'intérieur du code \LaTeX.
+
+% L'environnement {pyverbatim} se contente de recopier le code sans l'exécuter. 
+% Pour l'exécuter en plus, il faut utiliser {pyblock}, mais malheureusement Numpy, Scipy et Matplotlib ne sont pas encore accessibles via Overleaf
+\begin{code}
+\begin{pyverbatim}[][numbers=left]
+import numpy as np
+import scipy as sp
+import scipy.integrate
+import matplotlib.pyplot as plt
+
+# Mettez ici des choses intéressantes sachant que PythonTeX
+# n'est malheureusement pas encore capable (sur overleaf) de 
+# fonctionner avec Numpy, Scipy et matplotlib, donc mieux vaut
+# tester le programme dans Pyzo et le recopier ici quand on est 
+# sûr du résultat.
+\end{pyverbatim}
+\end{code}
+
+\end{appendix}
+\end{document}

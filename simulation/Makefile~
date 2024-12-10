@@ -1,0 +1,2 @@
+simulation2: simulation2.cpp
+	g++ -o simulation2 -g -Wall -W simulation2.cpp -fpermissive -lsfml-graphics -lsfml-window -lsfml-system -std=c++11

@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{natbib}         % Pour la bibliographie
+\usepackage{url}            % Pour citer les adresses web
+\usepackage[T1]{fontenc}    % Encodage des accents
+\usepackage[utf8]{inputenc} % Lui aussi
+\usepackage[frenchb]{babel} % Pour la traduction française
+\usepackage{numprint}       % Histoire que les chiffres soient bien
+
+\usepackage{amsmath}        % La base pour les maths
+\usepackage{mathrsfs}       % Quelques symboles supplémentaires
+\usepackage{amssymb}        % encore des symboles.
+\usepackage{amsfonts}       % Des fontes, eg pour \mathbb.
+
+\usepackage[svgnames]{xcolor} % De la couleur
+\usepackage{geometry}       % Gérer correctement la taille
+
+%%% Si jamais vous voulez changer de police: décommentez les trois 
+%\usepackage{tgpagella}
+%\usepackage{tgadventor}
+%\usepackage{inconsolata}
+
+%%% Pour L'utilisation de Python
+\usepackage{pythontex}
+
+\usepackage{graphicx} % inclusion des graphiques
+\usepackage{wrapfig}  % Dessins dans le texte.
+
+\title{Rapport de TIPE \\
+Optimisation du Pilotage d'un Voilier}
+\author{Cabrillana Jean-Manuel}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Préambule et Introduction}
+
+  Le travail de ce TIPE a consisté en l'optimisation du pilotage automatique d'un voilier, en cohérence avec l'objectif présenté dans le MCOT.
+  
+  Le TIPE s'est déroulé en trois étapes. La première phase a été consacrée au calcul d'une route de navigation afin de donner à tout moment un cap au pilote automatique. La seconde phase s'est attachée à la modélisation physique du comportement du voilier en mer, permettant ainsi d'améliorer le pilotage du voilier dans une dernière phase.
+  
+
+\section{Corps Principal}
+
+\subsection{Modalités d'Action}
+
+	Le tracé d'une route de navigation requiert de trouver le chemin le plus rapide entre deux coordonnées à partir de la connaissance des prévisions météorologiques. En considérant un graphe dont les sommets sont un couple contenant une date et une position, le coût entre deux sommets peut être calculé à partir de la polaire des vitesses, ce qui permet l'application de l'algorithme de Dijkstra.
+	
+	Pour simuler les fluctuations du vent en mer, le vent a été modélisé par une série de Fourier calculée à partir d'un spectre de puissance du vent. Les forces hydrodynamiques ont pu être calculées à partir des coefficients de portance et de trainée de la coque et de la voile. Le mouvement du voilier a été supposé plan dans la mesure où la gîte du voilier affecte peu les forces subies. Un régulateur PID réglé sur un échelon de la consigne a assuré le pilotage du voilier dans un premier temps.
+
+	Le comportement du barreur a ensuite été modélisé par un réseau de Petri gérant l'interaction avec les vagues et les fluctuations du vent. L'efficacité de l'algorithme modélisant ce comportement a ensuite été étudiée dans un cas simple.
+
+\subsection{Restitution et Analyse des Résultats}
+
+	L'algorithme a été appliqué pour tracer une route de navigation dans le Golfe d'Alaska. La route reste dans la zone où le vent est le plus fort et où l'allure est rapide (largue).
+	
+	La simulation montre que le régulateur PID convient pour le maintien du cap, mais sans autre action, le voilier est sensible aux fluctuations du vent ou au vagues.
+	
+	Dans le cas ou seul le vent fluctue, le fait de relancer le voilier lors d'une molle de vent permet de maintenir la vitesse et améliore les performances globales.
+	
+\section{Conclusion}
+
+	En adaptant l'algorithme de Dijkstra à la situation, une route de navigation théoriquement optimale a été obtenue. La simulation a permis de rendre compte des faiblesses des régulateurs PID classiques. Le comportement du barreur humain a pu être modélisé par un réseau de Petri et mis en oeuvre algorithmiquement. Les performances de pilotage ont été optimisées car le pilote anticipe les chutes de vitesse comme le ferait un barreur humain.
+	
+	
+	
+\end{document}

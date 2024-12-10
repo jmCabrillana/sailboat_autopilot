@@ -1,0 +1,2 @@
+simulation: simulation.cpp
+	g++ -o simulation -g -Wall -W simulation.cpp -fpermissive -lsfml-graphics -lsfml-window -lsfml-system

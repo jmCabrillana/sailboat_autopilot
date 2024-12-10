@@ -1,0 +1,81 @@
+\documentclass[french]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb}
+
+\usepackage{babel}
+
+
+%CHOIX DU THEME et/ou DE SA COULEUR
+% => essayer différents thèmes (en décommantant une des trois lignes suivantes)
+\usetheme{PaloAlto}
+%\usetheme{Madrid}
+%\usetheme{Copenhagen}
+
+% => il est possible, pour un thème donné, de modifier seulement la couleur
+
+
+%\useoutertheme[left]{sidebar}
+
+
+%Pour le TITLEPAGE
+\title{Exemple de Beamer}
+\subtitle{Initiation master~1}
+\author[Nom (court)]{Nom (long) de l'auteur}
+\date{Janvier 2012}
+\institute[UT3 -- FSI]{Université Toulouse~3 -- Faculté des sciences et ingénierie}
+
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	Un environnement \texttt{frame} pour chaque \emph{diapositive}.
+	\visible<2>{Chaque diapo pouvant contenir plusieurs \emph{couches}.}
+\end{frame}
+
+
+\begin{frame}{On peut mettre un titre : Sommaire}
+	\tableofcontents
+\end{frame}
+
+\section{Section 1}
+\begin{frame}{La section 1 commence}
+	blabla
+\end{frame}
+
+\begin{frame}
+	Un \textbf<2,3>{texte} en gras. 
+	\visible<3>{Un texte visible sur la 3\ieme{} couche}
+\end{frame}
+
+\begin{frame}{Titre (facultatif)} 
+\framesubtitle{Sous titre (facultatif aussi)}
+	\begin{block}{Remarque}
+	Un bloc
+	\end{block}
+	
+	\begin{alertblock}{Proposition}
+	Un bloc alerte
+	\end{alertblock}
+	
+	\begin{exampleblock}<2>{Exemple}
+	Un bloc exemple qui est visible sur la 2\ieme{} couche : $f(x)=2x$.
+	\end{exampleblock}
+\end{frame}
+
+\section{Section 2}
+\begin{frame}{La section 2 commence}
+\begin{itemize}
+	\item<1-> On peut cliquer sur les titres de la barre de gauche pour naviguer dans les sections du pdf (essayez !).
+	\item<2-> On peut changer le ``look'' du beamer, en changeant de thème. Retournez dans le fichier source et compilez avec les autres thèmes proposés (il existe énormément de thèmes; seuls trois sont proposés dans le source).
+\end{itemize}
+
+\end{frame}
+
+\end{document}
