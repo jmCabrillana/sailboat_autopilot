@@ -9,5 +9,5 @@ In the third phase this model was used to determine the steering of the sailboat
 ## Djikstra navigation result:
 ![result44](https://github.com/user-attachments/assets/6fefcc50-bc64-42be-baed-d3ccb9eea3d1)
 
-## Real time PID autopilot with event trigger :
+## Real time PID autopilot (red) with event trigger (blue) :
 ![Screenshot3](https://github.com/user-attachments/assets/db1222bd-d728-410a-8454-1646ae0bbcb4)
