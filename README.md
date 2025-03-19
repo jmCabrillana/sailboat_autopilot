@@ -1,7 +1,7 @@
 # Sailboat Autopilot
 
 This work was presented at the general examination for engineering schools (CPGE). It is focused on optimizing the automatic steering of a sailboat.
-The TIPE was carried out in three phases:
+This research was carried out in three phases:
 The first phase was dedicated to calculating a global navigation route using weather forecast with a spatio-temporal modification of the Dijkstra minimum path. 
 The second phase focused on the physical modeling of the sailboat's behavior at sea. 
 In the third phase this model was used to determine the steering of the sailboat using a PID augmented with a Petri net to adapt sailing strategy.
